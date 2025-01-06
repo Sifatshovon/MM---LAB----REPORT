@@ -1,0 +1,46 @@
+  INCLUDE 'EMU8086.INC'
+  .model small
+  .stack 100h
+
+.data
+    square_size db 7     
+    char_to_print db '*' 
+
+.code
+main:
+    
+    mov ax, @data
+    mov ds, ax
+    printn "THE SIZE OF SQUARE IS 7 "
+    
+    mov bl, [square_size] 
+
+row_loop:
+    mov cl, [square_size] 
+
+column_loop:
+    
+    mov ah, 02h            
+    mov dl, [char_to_print] 
+    int 21h               
+   
+    dec cl
+    jnz column_loop        
+   
+    mov dl, 0Ah            
+    mov ah, 02h
+    int 21h
+
+    mov dl, 0Dh            
+    mov ah, 02h
+    int 21h
+    
+    dec bl
+    jnz row_loop           
+  
+    mov ah, 4Ch
+    int 21h
+
+end main
+
+ret
