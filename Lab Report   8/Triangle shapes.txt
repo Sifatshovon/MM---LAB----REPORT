@@ -1,0 +1,38 @@
+
+; You may customize this and other start-up templates; 
+; The location of this template is c:\emu8086\inc\0_com_template.txt
+INCLUDE 'EMU8086.INC'
+org 100h
+
+ .model small
+ .stack 100h
+ .data
+ .code
+   main proc
+     mov cx,8
+     mov dx,1  
+     
+     printn "RIGHT ANGLED TRIANGLE "
+     
+    l1:
+     mov bx,dx
+      
+      ls:
+       mov ah,0eh
+       mov al,'*'
+       int 10h
+       dec bx
+       jnz ls
+     mov ah,0eh
+     mov al,0dh
+     int 10h
+     mov al,0ah
+     int 10h
+     
+     inc dx
+     cmp cx,dx
+     jnz l1
+   end code
+ end main
+
+ret
