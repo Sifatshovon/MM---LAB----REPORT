@@ -1,0 +1,92 @@
+.model small
+.stack 100h
+.data
+  msg1 db "(1) for A to Z and (2) for a to z and (3) for Z to A (4) z to a:$"
+  msg2 db 10,13,"Enter a character :$" 
+.code
+   main proc
+    mov ax,@data
+    mov ds,ax
+    
+    mov ah,09
+    lea dx,msg1
+    int 21h
+    
+    mov ah,1
+    int 21h
+    mov bh,al 
+    
+     mov ah,09
+    lea dx,msg2
+    int 21h
+    
+    mov ah,1
+    int 21h
+    mov bl,al
+    
+    cmp bh,'1'
+    je loop1
+    
+    cmp bh,'2'
+    je loop2
+    
+    cmp bh,'3'
+    je loop3 
+    
+    cmp bh,'4'
+    je loop4 
+    
+    loop1: 
+       mov ah,2
+       mov dl,bl
+       int 21h
+       
+       
+       inc bl
+       cmp dl,'Y'
+       jg exit
+       
+       jmp loop1
+       
+    loop2: 
+       mov ah,2
+       mov dl,bl
+       int 21h
+       
+       
+       inc bl
+       cmp dl,'y'
+       jg exit
+       
+       jmp loop2 
+   
+       
+    loop3: 
+       mov ah,2
+       mov dl,bl
+       int 21h
+       
+       
+       dec bl
+       cmp dl,'B'
+       jl exit
+       
+       jmp loop3
+       
+           
+    loop4: 
+       mov ah,2
+       mov dl,bl
+       int 21h
+       
+       
+       dec bl
+       cmp dl,'b'
+       jl exit
+       
+       jmp loop4 
+       
+   exit:
+     mov ah,4ch
+     main endp
+end main   
