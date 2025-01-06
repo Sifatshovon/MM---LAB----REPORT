@@ -1,0 +1,43 @@
+
+ INCLUDE 'EMU8086.INC'
+.model small
+.stack 100h
+
+.data
+    rect_width db 8     
+    rect_height db 5     
+    char_to_print db '*' 
+.code
+   main proc    
+    mov ax, @data
+    mov ds, ax
+   
+    mov bl, [rect_height]
+     
+    printn "THE RECTANGLE WIDTH OR HEIGHT IS 8 OR 5:"
+row_loop:    
+    mov cl, [rect_width] 
+
+column_loop:
+   
+    mov ah, 02h           
+    mov dl, [char_to_print] 
+    int 21h              
+    dec cl 
+    
+    jnz column_loop       
+    mov dl, 0Ah           
+    mov ah, 02h
+    int 21h
+
+    mov dl, 0Dh           
+    mov ah, 02h
+    int 21h
+    
+    dec bl
+    jnz row_loop          
+   
+    mov ah, 4Ch
+    int 21h
+
+end main
